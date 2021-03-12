@@ -36,6 +36,10 @@ entity RAMs_graphique is
             rst     :   in STD_LOGIC;
             CE      :   in STD_LOGIC;
             
+            enable_mem  :   in STD_LOGIC;
+            enable_cpt  :   in STD_LOGIC;
+            cpt_init    :   in STD_LOGIC;
+            
             adr_out :   out STD_LOGIC_VECTOR (8 downto 0);
             RAM_0   :   out STD_LOGIC_VECTOR (7 downto 0);
             RAM_2   :   out STD_LOGIC_VECTOR (7 downto 0);
@@ -56,10 +60,10 @@ architecture Behavioral of RAMs_graphique is
 
     component compteur is
         Port ( clk, rst, CE :   in      STD_LOGIC;
-           enable       :   in      STD_LOGIC;
-           init         :   in      STD_LOGIC;
-           data_Out     :   out     STD_LOGIC_VECTOR (8 downto 0)
-           );
+               enable       :   in      STD_LOGIC;
+               init         :   in      STD_LOGIC;
+               data_Out     :   out     STD_LOGIC_VECTOR (8 downto 0)
+               );
     end component;       
 
     component RAM_20x20_0 is 
@@ -159,23 +163,23 @@ architecture Behavioral of RAMs_graphique is
     end component;
 
     signal sig_cpt_adr  : STD_LOGIC_VECTOR(8 downto 0);    
-    signal sig_enable_mem   : STD_LOGIC := '1';
+    
 begin
 
-RAM_0_component     : RAM_20x20_0       port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_0);
-RAM_2_component     : RAM_20x20_2       port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_2);
-RAM_4_component     : RAM_20x20_4       port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_4);
-RAM_8_component     : RAM_20x20_8       port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_8);
-RAM_16_component    : RAM_20x20_16      port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_16);
-RAM_32_component    : RAM_20x20_32      port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_32);
-RAM_64_component    : RAM_20x20_64      port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_64);
-RAM_128_component   : RAM_20x20_128     port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_128);
-RAM_256_component   : RAM_20x20_256     port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_256);
-RAM_512_component   : RAM_20x20_512     port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_512);
-RAM_1024_component  : RAM_20x20_1024    port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_1024);
-RAM_2048_component  : RAM_20x20_2048    port map ( clk, CE, sig_enable_mem, sig_cpt_adr, RAM_2048);
-cpt_adr             : compteur          port map (clk, rst, CE, '1', '0', sig_cpt_adr);
+RAM_0_component     : RAM_20x20_0       port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_0);
+RAM_2_component     : RAM_20x20_2       port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_2);
+RAM_4_component     : RAM_20x20_4       port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_4);
+RAM_8_component     : RAM_20x20_8       port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_8);
+RAM_16_component    : RAM_20x20_16      port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_16);
+RAM_32_component    : RAM_20x20_32      port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_32);
+RAM_64_component    : RAM_20x20_64      port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_64);
+RAM_128_component   : RAM_20x20_128     port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_128);
+RAM_256_component   : RAM_20x20_256     port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_256);
+RAM_512_component   : RAM_20x20_512     port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_512);
+RAM_1024_component  : RAM_20x20_1024    port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_1024);
+RAM_2048_component  : RAM_20x20_2048    port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_2048);
+cpt_adr             : compteur          port map ( clk, rst, CE, enable_cpt, cpt_init, sig_cpt_adr);
 
-sig_enable_mem <= '1';
+adr_out <= sig_cpt_adr;
 
 end Behavioral;

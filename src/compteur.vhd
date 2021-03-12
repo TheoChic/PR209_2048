@@ -58,7 +58,7 @@ architecture RTL of compteur is
                 if (init = '1') then
                     cmp <= "000000000";
                 elsif (enable = '1') then
-                    if (cmp = "110010000") then
+                    if (cmp = "110001111") then
                         cmp <= "000000000";
                     else cmp <= cmp + 1; end if;
                 else 
