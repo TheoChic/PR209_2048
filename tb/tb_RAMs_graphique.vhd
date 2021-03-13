@@ -111,10 +111,3 @@ begin
     cpt_init <= '0';
 
 end tb;
-
--- Configuration block below is required by some simulators. Usually no need to edit.
-
-configuration cfg_tb_RAMs_graphique of tb_RAMs_graphique is
-    for tb
-    end for;
-end cfg_tb_RAMs_graphique;
