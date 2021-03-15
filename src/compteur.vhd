@@ -51,7 +51,7 @@ architecture RTL of compteur is
     cmpsync : process (clk , rst)
         begin
         
-        if ( rst = '1') then
+        if ( rst = '0') then
             cmp        <= "000000000";
         elsif ( clk = '1' and clk ' event ) then
             if (CE = '1') then

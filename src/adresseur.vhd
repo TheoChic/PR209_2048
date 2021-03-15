@@ -68,7 +68,7 @@ begin
     
     process(clk, rst)
     begin
-        if ( rst = '1') then
+        if ( rst = '0') then
             cpt_colonne <= 0;
             cpt_ligne <= 0;
             addr_ram_old <= addr_ram;
