@@ -41,7 +41,7 @@ entity conv_grid_to_img is
            init_adresseur : in STD_LOGIC;  
                 
            data_out : out STD_LOGIC_VECTOR (7 downto 0);
-           addr_out : out STD_LOGIC_VECTOR (13 downto 0));
+           addr_out : out STD_LOGIC_VECTOR (16 downto 0));
 end conv_grid_to_img;
 
 architecture Behavioral of conv_grid_to_img is
@@ -55,7 +55,7 @@ component RAMs_graphique is
             enable_cpt  :   in STD_LOGIC;
             cpt_init    :   in STD_LOGIC;
             
-            adr_out :   out STD_LOGIC_VECTOR (8 downto 0);
+            adr_out :   out STD_LOGIC_VECTOR (10 downto 0);
             RAM_0   :   out STD_LOGIC_VECTOR (7 downto 0);
             RAM_2   :   out STD_LOGIC_VECTOR (7 downto 0);
             RAM_4   :   out STD_LOGIC_VECTOR (7 downto 0);
@@ -93,14 +93,14 @@ component adresseur is
     Port (  clk, rst     : in STD_LOGIC;
             init         : in STD_LOGIC;
             index        : in STD_LOGIC_VECTOR (3 downto 0);
-            addr_ram     : in STD_LOGIC_VECTOR (8 downto 0);
+            addr_ram     : in STD_LOGIC_VECTOR (10 downto 0);
            
-            addr_screen : out STD_LOGIC_VECTOR (13 downto 0)); --Nombre de pixel de l'écran : 160*100
+            addr_screen : out STD_LOGIC_VECTOR (16 downto 0)); --Nombre de pixel de l'écran : 160*100
 end component;   
 
 signal sig_RAM_0, sig_RAM_2, sig_RAM_4, sig_RAM_8, sig_RAM_16, sig_RAM_32, sig_RAM_64, sig_RAM_128, sig_RAM_256, sig_RAM_512, sig_RAM_1024, sig_RAM_2048 : STD_LOGIC_VECTOR(7 downto 0);
-signal sig_adr_case : STD_LOGIC_VECTOR(8 downto 0);
-
+signal sig_adr_case : STD_LOGIC_VECTOR(10 downto 0);
+signal sig_data_out_old : STD_LOGIC_VECTOR(7 downto 0);
 begin
 
 RAMs : RAMs_graphique 
@@ -112,7 +112,7 @@ RAMs : RAMs_graphique
 MUX : MUX_ram_conv_image 
     port map( value_in,
               sig_RAM_0, sig_RAM_2, sig_RAM_4, sig_RAM_8, sig_RAM_16, sig_RAM_32, sig_RAM_64, sig_RAM_128, sig_RAM_256, sig_RAM_512, sig_RAM_1024, sig_RAM_2048,
-              data_out);
+              sig_data_out_old);
               
 conv_addr : adresseur
     port map( clk, rst,
@@ -121,4 +121,14 @@ conv_addr : adresseur
               sig_adr_case,
               addr_out);
 
+    process(clk, rst)
+    begin
+        if rst = '0' then
+            sig_data_out_old <= sig_data_out_old;
+        elsif clk'event and clk = '1' then
+            data_out <= sig_data_out_old;
+        end if;
+    end process;
 end Behavioral;
+
+

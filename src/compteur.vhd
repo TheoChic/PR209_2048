@@ -38,13 +38,13 @@ entity compteur is
     Port ( clk, rst, CE :   in      STD_LOGIC;
            enable       :   in      STD_LOGIC;
            init         :   in      STD_LOGIC;
-           data_Out     :   out     STD_LOGIC_VECTOR (8 downto 0)
+           data_Out     :   out     STD_LOGIC_VECTOR (10 downto 0)
            );
 end compteur;
 
 architecture RTL of compteur is
 
-    signal cmp : unsigned (8 downto 0) := "000000000";
+    signal cmp : unsigned (10 downto 0) := "00000000000";
     
     begin
     
@@ -52,14 +52,14 @@ architecture RTL of compteur is
         begin
         
         if ( rst = '0') then
-            cmp        <= "000000000";
+            cmp        <= "00000000000";
         elsif ( clk = '1' and clk ' event ) then
             if (CE = '1') then
                 if (init = '1') then
-                    cmp <= "000000000";
+                    cmp <= "00000000000";
                 elsif (enable = '1') then
-                    if (cmp = "110001111") then
-                        cmp <= "000000000";
+                    if (cmp = "11000111111") then
+                        cmp <= "00000000000";
                     else cmp <= cmp + 1; end if;
                 else 
                     cmp <= cmp;
