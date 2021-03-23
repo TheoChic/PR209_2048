@@ -49,7 +49,7 @@ architecture Behavioral of RAM_40x40_256 is
     
     mem_process: process(clk)
     begin
-       if (clk'event and clk = '0') then
+       if (clk'event and clk = '1') then
             if (CE = '1') then
                 if (enable = '1') then
                     data_out <= mem(TO_INTEGER(UNSIGNED(adr)));

@@ -100,7 +100,7 @@ end component;
 
 signal sig_RAM_0, sig_RAM_2, sig_RAM_4, sig_RAM_8, sig_RAM_16, sig_RAM_32, sig_RAM_64, sig_RAM_128, sig_RAM_256, sig_RAM_512, sig_RAM_1024, sig_RAM_2048 : STD_LOGIC_VECTOR(7 downto 0);
 signal sig_adr_case : STD_LOGIC_VECTOR(10 downto 0);
-signal sig_data_out_old : STD_LOGIC_VECTOR(7 downto 0);
+
 begin
 
 RAMs : RAMs_graphique 
@@ -112,7 +112,7 @@ RAMs : RAMs_graphique
 MUX : MUX_ram_conv_image 
     port map( value_in,
               sig_RAM_0, sig_RAM_2, sig_RAM_4, sig_RAM_8, sig_RAM_16, sig_RAM_32, sig_RAM_64, sig_RAM_128, sig_RAM_256, sig_RAM_512, sig_RAM_1024, sig_RAM_2048,
-              sig_data_out_old);
+              data_out); 
               
 conv_addr : adresseur
     port map( clk, rst,
@@ -121,14 +121,6 @@ conv_addr : adresseur
               sig_adr_case,
               addr_out);
 
-    process(clk, rst)
-    begin
-        if rst = '0' then
-            sig_data_out_old <= sig_data_out_old;
-        elsif clk'event and clk = '1' then
-            data_out <= sig_data_out_old;
-        end if;
-    end process;
 end Behavioral;
 
 

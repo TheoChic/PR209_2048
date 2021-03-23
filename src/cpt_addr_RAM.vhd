@@ -34,15 +34,15 @@ use IEEE . NUMERIC_STD.ALL ;
 --use UNISIM.VComponents.all;
 
 
-entity compteur is
+entity cpt_addr_RAM is
     Port ( clk, rst, CE :   in      STD_LOGIC;
            enable       :   in      STD_LOGIC;
            init         :   in      STD_LOGIC;
            data_Out     :   out     STD_LOGIC_VECTOR (10 downto 0)
            );
-end compteur;
+end cpt_addr_RAM;
 
-architecture RTL of compteur is
+architecture RTL of cpt_addr_RAM is
 
     signal cmp : unsigned (10 downto 0) := "00000000000";
     

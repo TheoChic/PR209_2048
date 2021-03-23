@@ -58,7 +58,7 @@ end RAMs_graphique;
 
 architecture Behavioral of RAMs_graphique is
 
-    component compteur is
+    component cpt_addr_RAM is
         Port ( clk, rst, CE :   in      STD_LOGIC;
                enable       :   in      STD_LOGIC;
                init         :   in      STD_LOGIC;
@@ -178,7 +178,7 @@ RAM_256_component   : RAM_40x40_256     port map ( clk, CE, enable_mem, sig_cpt_
 RAM_512_component   : RAM_40x40_512     port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_512);
 RAM_1024_component  : RAM_40x40_1024    port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_1024);
 RAM_2048_component  : RAM_40x40_2048    port map ( clk, CE, enable_mem, sig_cpt_adr, RAM_2048);
-cpt_adr             : compteur          port map ( clk, rst, CE, enable_cpt, cpt_init, sig_cpt_adr);
+cpt_adr             : cpt_addr_RAM      port map ( clk, rst, CE, enable_cpt, cpt_init, sig_cpt_adr);
 
 adr_out <= sig_cpt_adr;
 
