@@ -17,7 +17,7 @@ architecture tb of tb_RAMs_graphique is
               enable_mem : in std_logic;
               enable_cpt : in std_logic;
               cpt_init   : in std_logic;
-              adr_out    : out std_logic_vector (8 downto 0);
+              adr_out    : out std_logic_vector (10 downto 0);
               RAM_0      : out std_logic_vector (7 downto 0);
               RAM_2      : out std_logic_vector (7 downto 0);
               RAM_4      : out std_logic_vector (7 downto 0);
@@ -38,7 +38,7 @@ architecture tb of tb_RAMs_graphique is
     signal enable_mem : std_logic;
     signal enable_cpt : std_logic;
     signal cpt_init   : std_logic;
-    signal adr_out    : std_logic_vector (8 downto 0);
+    signal adr_out    : std_logic_vector (10 downto 0);
     signal RAM_0      : std_logic_vector (7 downto 0);
     signal RAM_2      : std_logic_vector (7 downto 0);
     signal RAM_4      : std_logic_vector (7 downto 0);
@@ -92,9 +92,9 @@ begin
 
         -- Reset generation
         -- EDIT: Check that rst is really your reset signal
-        rst <= '1';
-        wait for 100 ns;
         rst <= '0';
+        wait for 100 ns;
+        rst <= '1';
         wait for 100 ns;
 
         -- EDIT Add stimuli here
