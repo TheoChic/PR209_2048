@@ -16,7 +16,8 @@ architecture tb of tb_cpt_4bits is
               CE        : in std_logic;
               cpt_en    : in std_logic;
               cpt_init  : in std_logic;
-              val_btn   : in std_logic_vector (1 downto 0);
+              val_btn   : in std_logic_vector (3 downto 0);
+              rst_b     : in std_logic;
               addr_max  : out std_logic;
               ind_i     : out std_logic_vector (1 downto 0);
               ind_j     : out std_logic_vector (1 downto 0);
@@ -30,7 +31,8 @@ architecture tb of tb_cpt_4bits is
     signal CE        : std_logic;
     signal cpt_en    : std_logic;
     signal cpt_init  : std_logic;
-    signal val_btn   : std_logic_vector (1 downto 0);
+    signal val_btn   : std_logic_vector (3 downto 0);
+    signal rst_b     : std_logic;
     signal addr_max  : std_logic;
     signal ind_i     : std_logic_vector (1 downto 0);
     signal ind_j     : std_logic_vector (1 downto 0);
@@ -51,6 +53,7 @@ begin
               cpt_en    => cpt_en,
               cpt_init  => cpt_init,
               val_btn   => val_btn,
+              rst_b     => rst_b,
               addr_max  => addr_max,
               ind_i     => ind_i,
               ind_j     => ind_j,
@@ -67,9 +70,10 @@ begin
     stimuli : process
     begin
         -- EDIT Adapt initialization as needed
-        CE <= '0';
+        CE <= '1';
         cpt_en <= '0';
         cpt_init <= '0';
+        rst_b <= '0';
         val_btn <= (others => '0');
 
         -- Reset generation
@@ -81,79 +85,18 @@ begin
 
         -- EDIT Add stimuli here
         cpt_init <= '0';
-        cpt_en <= '1';
-        val_btn <= "11";
+        
+        val_btn <= "1000";
               
-        wait for 1 * TbPeriod; CE <= '1';    
+        wait for 1 * TbPeriod;    
         cpt_init <= '1';            
-        wait for 1 * TbPeriod; CE <= '0';
+        wait for 1 * TbPeriod;
         cpt_init <= '0';  
-             
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';
-        
-        wait for 1 * TbPeriod; CE <= '1';
-        wait for 1 * TbPeriod; CE <= '0';                                                                                
+            
+        wait for 3 * TbPeriod;
+        cpt_en <= '1'; 
+        wait for 18 * TbPeriod;
+                                                                              
 
         -- Stop the clock and hence terminate the simulation
         TbSimEnded <= '1';

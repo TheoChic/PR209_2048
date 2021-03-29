@@ -37,7 +37,9 @@ entity process_2048 is
 	       btn_haut                 : in std_logic;
            btn_bas                  : in std_logic;
 	       btn_droit                : in std_logic;
-	       btn_gauche               : in std_logic);
+	       btn_gauche               : in std_logic;
+	       
+	       data_out_export          : out std_logic_vector(11 downto 0));
 end process_2048;
 
 architecture beh_process_2048 of process_2048 is
@@ -57,6 +59,11 @@ signal data_in, data_out            : std_logic_vector(11 downto 0);
 
 signal data_out_pr                  : std_logic_vector(11 downto 0);
 
+-- SIGNAUX RAM export grille
+signal cpt_en_export                : std_logic;
+signal addr_max_export              : std_logic;
+signal adr_read_export              : std_logic_vector(3 downto 0);
+
 -- SIGNAUX FSM
 signal cpt_en, cpt_init             : std_logic;
 
@@ -69,6 +76,8 @@ signal add                          : std_logic_vector(11 downto 0);
 signal add_en                       : std_logic;
 
 signal sel_dataw                    : std_logic_vector(1 downto 0);
+
+signal rst_b                        : std_logic;
 
 component pulse_limiter is
   Port (   CLK, RST, CE             : in std_logic;
@@ -84,21 +93,17 @@ component pulse_limiter is
 	       gauche 	                : OUT STD_LOGIC);
 end component;
 
-component mux_4_entrees is
-    Port ( e0, e1, e2, e3           : in std_logic_vector (1 downto 0);
-           sel                      : in std_logic_vector (3 downto 0);
-           y                        : out std_logic_vector (1 downto 0));
-end component;
-
 component cpt_4bits is
-    Port ( clk, rst, CE             : in std_logic;
-           cpt_en, cpt_init         : in std_logic;
+    Port ( clk, rst, CE                 :   in  STD_LOGIC;
+           cpt_en, cpt_init             :   in  STD_LOGIC;
            
-           val_btn                  : in  std_logic_vector (1 downto 0);
+           val_btn                      :   in  STD_LOGIC_VECTOR (3 downto 0);
            
-           addr_max                 : out STD_LOGIC;
-           ind_i, ind_j             : out std_logic_vector (1 downto 0);             
-           pr_addr, curr_addr, nx_addr  :   out std_logic_vector (3 downto 0));
+           rst_b                        :   in std_logic;
+           
+           addr_max                     :   out STD_LOGIC;
+           ind_i, ind_j                 :   out STD_LOGIC_VECTOR (1 downto 0);             
+           pr_addr, curr_addr, nx_addr  :   out STD_LOGIC_VECTOR (3 downto 0));
 end component;
 
 component mux_2_entrees is
@@ -120,15 +125,17 @@ component bascule_d is
 end component;
 
 component RAM_double_acces is
-    Port ( clk                      : in std_logic;
-           CE                       : in std_logic;
-           enable_writing           : in std_logic;
+    Port ( clk              : in    STD_LOGIC;
+           CE               : in    STD_LOGIC;
+           enable_writing   : in    STD_LOGIC;
            
-           adr_out                  : in STD_LOGIC_VECTOR(3 downto 0);
-           adr_in                   : in STD_LOGIC_VECTOR(3 downto 0);
+           adr_out          : in    STD_LOGIC_VECTOR(3 downto 0);
+           adr_in           : in    STD_LOGIC_VECTOR(3 downto 0);
+           adr_read_export  : in    STD_LOGIC_VECTOR(3 downto 0); 
            
-           data_in                  : in STD_LOGIC_VECTOR(11 downto 0);
-           data_out                 : out STD_LOGIC_VECTOR(11 downto 0));
+           data_in          : in    STD_LOGIC_VECTOR(11 downto 0);
+           data_out         : out   STD_LOGIC_VECTOR(11 downto 0);
+           data_out_export  : out   STD_LOGIC_VECTOR(11 downto 0));
 end component;
 
 component unite_operative is
@@ -145,13 +152,24 @@ component machine_etats is
             cmp, zero               : in std_logic;
             
             addr_max                : in std_logic;
+ 
+            addr_max_export         : out STD_LOGIC;
+            cpt_en_export           : out std_logic;
             
             add_en                  : out std_logic;
             cpt_en, cpt_init        : out std_logic;
+            rst_b                   : out std_logic;            
             w_en                    : out std_logic;
             
             sel_addr, sel_addw      : out std_logic;
             sel_dataw               : out std_logic_vector(1 downto 0));
+end component;
+
+component cpt_export_grille is
+    Port ( clk, rst, CE :   in  STD_LOGIC;
+           cpt_en       :   in  STD_LOGIC;
+           addr_max     :   out STD_LOGIC;
+           addr         :   out STD_LOGIC_VECTOR (3 downto 0));
 end component;
 
 begin
@@ -167,18 +185,7 @@ Port map(   clk         => clk,
             haut   => haut,
             droit  => droit, 
             bas    => bas,
-	        gauche => gauche);
-
-sel_btn : mux_4_entrees
-Port map(   e0          => "00",
-            e1          => "01",
-            e2          => "10",
-            e3          => "11",
-            sel(0)      => haut,
-            sel(1)      => droit,
-            sel(2)      => bas,
-            sel(3)      => gauche,
-            y           => val_btn);	       
+	        gauche => gauche); 
 
 cpt : cpt_4bits
 Port map(   clk         => clk,
@@ -186,7 +193,11 @@ Port map(   clk         => clk,
             CE          => CE,
             cpt_en      => cpt_en,
             cpt_init    => cpt_init,
-            val_btn     => val_btn,
+            val_btn(0)  => haut,
+            val_btn(1)  => droit,
+            val_btn(2)  => bas,
+            val_btn(3)  => gauche,
+            rst_b       => rst_b,
             addr_max    => addr_max,
             ind_i       => ind_i,
             ind_j       => ind_j,          
@@ -210,10 +221,12 @@ grid : RAM_double_acces
 Port map (  clk         => clk,
             CE          => CE,
             enable_writing => write_en,
-            adr_out     => addr_r,
+            adr_out     => addr_r,            
             adr_in      => addr_w,
+            adr_read_export => adr_read_export,
             data_in     => data_in,
-            data_out    => data_out);
+            data_out    => data_out,
+            data_out_export => data_out_export);
             
 reg : bascule_d
 Port map(   clk         => clk,
@@ -244,12 +257,23 @@ Port map(   clk         => clk,
             cmp         => cmp,
             zero        => zero,
             addr_max    => addr_max,
+            addr_max_export => addr_max_export,
+            cpt_en_export => cpt_en_export,
             add_en      => add_en,
             cpt_en      => cpt_en,
             cpt_init    => cpt_init,
+            rst_b       => rst_b,
             w_en        => write_en,
             sel_dataw   => sel_dataw,
             sel_addr    => sel_addr,
-            sel_addw    => sel_addw);                          
+            sel_addw    => sel_addw); 
+
+cpt_export : cpt_export_grille
+Port map(   clk         => clk,
+            rst         => rst,
+            CE          => CE,
+            cpt_en      => cpt_en_export,
+            addr_max    => addr_max_export,
+            addr        => adr_read_export);               
 
 end beh_process_2048;

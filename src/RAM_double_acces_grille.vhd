@@ -18,9 +18,11 @@ entity RAM_double_acces is
            
            adr_out          : in    STD_LOGIC_VECTOR(3 downto 0);
            adr_in           : in    STD_LOGIC_VECTOR(3 downto 0);
+           adr_read_export  : in    STD_LOGIC_VECTOR(3 downto 0); 
            
            data_in          : in    STD_LOGIC_VECTOR(11 downto 0);
-           data_out         : out   STD_LOGIC_VECTOR(11 downto 0));
+           data_out         : out   STD_LOGIC_VECTOR(11 downto 0);
+           data_out_export  : out   STD_LOGIC_VECTOR(11 downto 0));
 end RAM_double_acces;
 
 architecture Behavioral of RAM_double_acces is
@@ -36,7 +38,8 @@ architecture Behavioral of RAM_double_acces is
                 if (enable_writing = '1') then
                     mem(TO_INTEGER(UNSIGNED(adr_in))) <= data_in;
                 end if;                   
-                data_out <= mem(TO_INTEGER(UNSIGNED(adr_out)));               
+                data_out <= mem(TO_INTEGER(UNSIGNED(adr_out))); 
+                data_out_export <= mem(TO_INTEGER(UNSIGNED(adr_read_export)));              
             end if;
         end if;
        
