@@ -36,6 +36,7 @@ use IEEE.numeric_std.ALL;
 entity top_graphics is
     Port ( clk : in STD_LOGIC;
            rst : in STD_LOGIC;
+           CE :  in STD_LOGIC;
            
            index_in      : in STD_LOGIC_VECTOR  (3 downto 0);
            value_in      : in STD_LOGIC_VECTOR  (11 downto 0);
@@ -103,7 +104,7 @@ end component;
 constant cst : integer :=4;
 
 
-signal CE : std_logic ;
+signal sig_CE : std_logic ;
 signal index : std_logic_vector(3 downto 0);
 signal value : std_logic_vector(11 downto 0);
 signal data_to_RAM, data_to_VGA : std_logic_vector(7 downto 0);
@@ -119,13 +120,13 @@ signal cpt : integer range 0 to (13400*cst) := 0;
 signal reset : std_logic;
 begin
     conv_grid : conv_grid_to_img   
-        port map(clk, rst, CE, index_in, value_in, enable_mem, enable_cpt, init_cpt_addr_ram_conv, init_adresseur, data_to_RAM, addr_grid);
+        port map(clk, rst, sig_CE, index_in, value_in, enable_mem, enable_cpt, init_cpt_addr_ram_conv, init_adresseur, data_to_RAM, addr_grid);
         
     RAM_screen : RAM_double_acces
-        port map(clk, CE, enable_writing, addr_screen, addr_grid, data_to_RAM, data_to_VGA);
+        port map(clk, sig_CE, enable_writing, addr_screen, addr_grid, data_to_RAM, data_to_VGA);
         
     cpt_addr_vga : cpt_addr_screen
-        port map(clk, rst, CE, enable_cpt_ram, init_cpt_addr_ram, addr_screen);
+        port map(clk, rst, sig_CE, enable_cpt_ram, init_cpt_addr_ram, addr_screen);
         
     VGA : VGA_bitmap_320x240
         port map(clk, reset, VGA_hs, VGA_vs, VGA_red, VGA_green, VGA_blue, addr_screen, data_to_VGA, data_write, data_out);
@@ -133,7 +134,7 @@ begin
 reset <= not(rst);
     
 
-CE <= '1';
+sig_CE <= CE;
 enable_mem <= '1';
 enable_cpt <= '1';
 enable_cpt_ram <= '1';

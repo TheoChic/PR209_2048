@@ -8,7 +8,11 @@ entity machine_etats is
             
             cmp, zero               : in std_logic;
             
-            btn                     : in STD_LOGIC;
+            btn_haut                : in STD_LOGIC;
+            btn_bas                 : in STD_LOGIC;
+            btn_gauche              : in STD_LOGIC;
+            btn_droit               : in STD_LOGIC;
+
             init_btn                : out STD_LOGIC;
           
             cpt_ram_grille_en, cpt_ram_grille_init        : out STD_LOGIC;
@@ -310,7 +314,7 @@ begin
             
     end process cal_sig;
 
-    cal_nx_state : process (rst, pr_state, addr_max_ram_grille, btn, bool_calc, zero, previous_state, cpt, cmp) --process transition
+    cal_nx_state : process (rst, pr_state, addr_max_ram_grille, btn_haut, btn_bas, btn_droit, btn_gauche , bool_calc, zero, previous_state, cpt, cmp) --process transition
         begin
         
             case pr_state is
@@ -340,7 +344,7 @@ begin
                     --activer l'écriture sur la ram CPU qui fonctionnera en front descendant
                     --correctement orienter les mux 
                 when WAITING =>
-                    if btn = '1' then
+                    if (btn_haut OR btn_bas OR btn_droit OR btn_gauche) = '1' then
                         nx_state <= RECHERCHE_ZERO;
                     end if;
                     --tant que pas de bouton, on reste

@@ -94,6 +94,20 @@ component pulse_limiter is
 	       gauche 	                : OUT STD_LOGIC);
 end component;
 
+component RAM_double_acces_grille is
+    Port ( clk              : in    STD_LOGIC;
+           CE               : in    STD_LOGIC;
+           enable_writing   : in    STD_LOGIC;
+           
+           adr_out          : in    STD_LOGIC_VECTOR(3 downto 0);
+           adr_in           : in    STD_LOGIC_VECTOR(3 downto 0);
+           adr_read_export  : in    STD_LOGIC_VECTOR(3 downto 0); 
+           
+           data_in          : in    STD_LOGIC_VECTOR(11 downto 0);
+           data_out         : out   STD_LOGIC_VECTOR(11 downto 0);
+           data_out_export  : out   STD_LOGIC_VECTOR(11 downto 0));
+end component;
+
 component cpt_4bits is
     Port ( clk, rst, CE                 :   in  STD_LOGIC;
            cpt_en, cpt_init             :   in  STD_LOGIC;
