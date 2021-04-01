@@ -39,7 +39,9 @@ entity process_2048 is
 	       btn_droit                : in std_logic;
 	       btn_gauche               : in std_logic;
 	       
-	       data_out_export          : out std_logic_vector(11 downto 0));
+	       addr_write_export        : out std_logic_vector(3 downto 0);
+	       data_out_export          : out std_logic_vector(11 downto 0);
+	       w_enable_export          : out std_logic_vector(11 downto 0));
 end process_2048;
 
 architecture beh_process_2048 of process_2048 is
@@ -62,7 +64,6 @@ signal data_out_pr                  : std_logic_vector(11 downto 0);
 -- SIGNAUX RAM export grille
 signal cpt_en_export                : std_logic;
 signal addr_max_export              : std_logic;
-signal adr_read_export              : std_logic_vector(3 downto 0);
 
 -- SIGNAUX FSM
 signal cpt_en, cpt_init             : std_logic;
@@ -124,19 +125,6 @@ component bascule_d is
            q : out STD_LOGIC_VECTOR (11 downto 0));
 end component;
 
-component RAM_double_acces_grille is
-    Port ( clk              : in    STD_LOGIC;
-           CE               : in    STD_LOGIC;
-           enable_writing   : in    STD_LOGIC;
-           
-           adr_out          : in    STD_LOGIC_VECTOR(3 downto 0);
-           adr_in           : in    STD_LOGIC_VECTOR(3 downto 0);
-           adr_read_export  : in    STD_LOGIC_VECTOR(3 downto 0); 
-           
-           data_in          : in    STD_LOGIC_VECTOR(11 downto 0);
-           data_out         : out   STD_LOGIC_VECTOR(11 downto 0);
-           data_out_export  : out   STD_LOGIC_VECTOR(11 downto 0));
-end component;
 
 component unite_operative is
     Port(   c1, c2                  : in STD_LOGIC_VECTOR (11 downto 0);
