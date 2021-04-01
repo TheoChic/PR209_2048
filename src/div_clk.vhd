@@ -32,31 +32,51 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity clk_div is
-    Port ( clk, rst     :   in  STD_LOGIC;
-           CE_graph     :   out STD_LOGIC);
+    Port (  clk, rst     :   in  STD_LOGIC;
+            CE_VGA       :   out STD_LOGIC;
+            CE_addr      :   out STD_LOGIC;
+            CE_process   :   out STD_LOGIC);
 end clk_div;
 
 architecture beh_clk_div of clk_div is
 
-signal cpt         : unsigned (9 downto 0):= "0000000000";
-
+signal cpt_vga      : unsigned (10 downto 0):= (others => '0'); 
+signal cpt_addr     : unsigned (10 downto 0):= (others => '0'); 
+signal cpt_process  : unsigned (3 downto 0):= (others => '0'); 
 begin
 
     process (clk , rst)
         begin
         
             if ( rst = '0') then
-                cpt    <= "0000000000";
-                        
+                cpt_vga    <= (others => '0');
+                cpt_addr   <= (others => '0');
+
             elsif ( clk = '1' and clk ' event ) then
-                 if (cpt = "1111101000") then
-                    cpt <= "0000000000";
-                    CE_graph <= '1';
+                 if (cpt_vga = "0000000001") then -- 1111101000 1000 hz
+                    cpt_vga <= (others => '0');
+                    CE_VGA <= '1';
                  else
-                    cpt <= cpt + 1;
-                    CE_graph <= '0';
+                    cpt_vga <= cpt_vga + 1;
+                    CE_vga <= '0';
                  end if;
-                    
+                 ----------------CE ADDR mem partagee to conv_grid
+                 if cpt_addr = "11111010000" then   -- 101111101011110000100f = 64Hz => 4 grille / s
+                    cpt_addr <= (others => '0');
+                    CE_addr <= '1';
+                 else
+                    cpt_addr <= cpt_addr + 1;
+                    CE_addr <= '0';
+                 end if;  
+                 
+                 ----------------CE process----------------------
+                 if cpt_process = "0" then  --20 MHz
+                    cpt_process <= (others => '0');
+                    CE_process <= '1';
+                 else
+                    cpt_process <= cpt_process + 1;
+                    CE_process <= '0';
+                 end if;  
             end if; 
      
     end process;

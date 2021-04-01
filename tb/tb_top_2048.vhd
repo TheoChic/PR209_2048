@@ -76,10 +76,15 @@ begin
         rst <= '1';
         wait for 100 ns;
 
-        wait for 100 * TbPeriod;
-        btn_haut <= '1';
-        wait for 1 * TbPeriod;
-        btn_haut <= '0';
+--        wait for 100 * TbPeriod;
+--        btn_haut <= '1';
+--        wait for 1 * TbPeriod;
+--        btn_haut <= '0';
+        
+--        wait for 150 * TbPeriod;
+--        btn_bas <= '1';
+--        wait for 1 * TbPeriod;
+--        btn_bas <= '0';
 
         -- EDIT Add stimuli here
         wait for 100000 * TbPeriod;

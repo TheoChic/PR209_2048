@@ -37,7 +37,7 @@ entity top_graphics is
     Port ( clk : in STD_LOGIC;
            rst : in STD_LOGIC;
            CE :  in STD_LOGIC;
-           
+           CE_vga : in STD_LOGIC;
            index_in      : in STD_LOGIC_VECTOR  (3 downto 0);
            value_in      : in STD_LOGIC_VECTOR  (11 downto 0);
             
@@ -103,7 +103,7 @@ end component;
 
 constant cst : integer :=4;
 
-
+signal clk_vga : std_logic := '0';
 signal sig_CE : std_logic ;
 signal index : std_logic_vector(3 downto 0);
 signal value : std_logic_vector(11 downto 0);
@@ -131,8 +131,8 @@ begin
     VGA : VGA_bitmap_320x240
         port map(clk, reset, VGA_hs, VGA_vs, VGA_red, VGA_green, VGA_blue, addr_screen, data_to_VGA, data_write, data_out);
     
-reset <= not(rst);
-    
+  
+  
 
 sig_CE <= CE;
 enable_mem <= '1';
@@ -140,5 +140,7 @@ enable_cpt <= '1';
 enable_cpt_ram <= '1';
 data_write <= '1';
 enable_writing <= '1';
+init_cpt_addr_ram_conv <= '0';
+init_adresseur <= '0';
 
 end Behavioral;
