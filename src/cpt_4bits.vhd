@@ -133,10 +133,11 @@ architecture beh_cpt_4bits of cpt_4bits is
 
                             when others => -- do nothing  
                         end case;
-                               
-                        end if;
                         
                         pr_cpt <= curr_cpt;          
+   
+                        end if;
+                        
             end if;
         end if; 
                                   

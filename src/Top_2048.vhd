@@ -39,6 +39,7 @@ entity Top_2048 is
             btn_droit   : in STD_LOGIC;
             btn_gauche  : in STD_LOGIC;
             
+            LED         : out STD_LOGIC_VECTOR(3 downto 0);
             VGA_hs       : out STD_LOGIC;   -- horisontal vga syncr.
             VGA_vs       : out STD_LOGIC;   -- vertical vga syncr.
             VGA_red      : out STD_LOGIC_VECTOR(3 downto 0);    -- red output
@@ -66,7 +67,8 @@ component top_graphics is
     Port ( clk : in STD_LOGIC;
            rst : in STD_LOGIC;
            CE  : in STD_LOGIC;
-           
+           CE_vga : in STD_LOGIC;
+
            index_in      : in STD_LOGIC_VECTOR  (3 downto 0);
            value_in      : in STD_LOGIC_VECTOR  (11 downto 0);
             
@@ -98,10 +100,11 @@ end component;
 
 component clk_div is
     Port ( clk, rst     :   in  STD_LOGIC;
-           CE_graph     :   out STD_LOGIC);
+           CE_VGA       :   out STD_LOGIC;
+           CE_addr      :   out STD_LOGIC);
 end component;
 
-signal CE_graph             : std_logic;
+signal CE_VGA, CE_ADDR, CE_PROCESS      : std_logic;
 signal sig_CE               : std_logic;
 
 signal addr_write_export    : std_logic_vector(3 downto 0);
@@ -116,6 +119,7 @@ Graphisme : top_graphics
     Port map(   clk         => clk,
                 rst         => rst,
                 CE          => sig_CE,
+                CE_vga      => CE_vga,
                 index_in    => addr_read,  
                 value_in    => data_grid,
                    
@@ -154,7 +158,7 @@ RAM_partage : RAm_double_acces_partage
 cpt_addr : cpt_ram_partage 
     Port map (  clk         => clk,
                 rst         => rst,
-                CE          => CE_graph,
+                CE          => CE_ADDR,
                 
                 cpt_en      => '1',
                 data_out    => addr_read);
@@ -162,9 +166,15 @@ cpt_addr : cpt_ram_partage
 Clock_divider : clk_div 
     Port map ( clk         => clk,
                rst         => rst,
-               
-               CE_graph    => CE_graph);
+               CE_VGA      => CE_VGA, 
+               CE_addr     => CE_ADDR);
    
 sig_CE <= '1';             
-                
+LED(0) <= btn_haut;   
+LED(1) <= btn_bas;  
+LED(2) <= btn_droit;               
+LED(3) <= btn_gauche;               
+
+             
+            
 end Behavioral;
