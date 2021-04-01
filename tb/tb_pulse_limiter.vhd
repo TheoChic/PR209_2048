@@ -18,10 +18,10 @@ architecture tb of tb_pulse_limiter is
               btn_bas     : in std_logic;
               btn_droit   : in std_logic;
               btn_gauche  : in std_logic;
-              etat_haut   : out std_logic;
-              etat_bas    : out std_logic;
-              etat_droit  : out std_logic;
-              etat_gauche : out std_logic);
+              haut   : out std_logic;
+              bas    : out std_logic;
+              droit  : out std_logic;
+              gauche : out std_logic);
     end component;
 
     signal CLK         : std_logic;
@@ -50,10 +50,10 @@ begin
               btn_bas     => btn_bas,
               btn_droit   => btn_droit,
               btn_gauche  => btn_gauche,
-              etat_haut   => etat_haut,
-              etat_bas    => etat_bas,
-              etat_droit  => etat_droit,
-              etat_gauche => etat_gauche);
+              haut   => etat_haut,
+              bas    => etat_bas,
+              droit  => etat_droit,
+              gauche => etat_gauche);
 
     -- Clock generation
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
@@ -81,16 +81,16 @@ begin
         CE <= '1';
         wait for 1 * TbPeriod;
         btn_haut <= '1';
-        wait for 5 * TbPeriod;
+        wait for 15 * TbPeriod;
         btn_bas <= '1';
-        btn_haut <= '0';
-        wait for 5 * TbPeriod;
+        btn_haut <= '1';
+        wait for 15 * TbPeriod;
         btn_droit <= '1';
         btn_bas <= '0';
-        wait for 5 * TbPeriod;
+        wait for 15 * TbPeriod;
         btn_gauche <= '1';
         btn_droit <= '0';
-        wait for 5 * TbPeriod;
+        wait for 15 * TbPeriod;
         btn_gauche <= '0';
         wait for 5 * TbPeriod;
 
