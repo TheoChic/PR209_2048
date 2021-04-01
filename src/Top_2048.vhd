@@ -115,7 +115,7 @@ signal addr_read            : STD_LOGIC_VECTOR (3 downto 0);
 signal data_grid            : STD_LOGIC_VECTOR (11 downto 0);
 begin
 
-Graphisme : top_graphics
+Unite_affichage : top_graphics
     Port map(   clk         => clk,
                 rst         => rst,
                 CE          => sig_CE,
@@ -129,7 +129,7 @@ Graphisme : top_graphics
                 VGA_green   => VGA_green,
                 VGA_blue    => VGA_blue);
 
-Calcul : process_2048 
+Unite_traitement : process_2048 
     Port map (  clk         => clk,
                 rst         => rst,
                 CE          => sig_CE,

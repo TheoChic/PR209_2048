@@ -140,6 +140,7 @@ enable_cpt <= '1';
 enable_cpt_ram <= '1';
 data_write <= '1';
 enable_writing <= '1';
-
+init_cpt_addr_ram_conv <= '0';
+init_adresseur <= '0';
 
 end Behavioral;

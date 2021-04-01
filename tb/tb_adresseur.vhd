@@ -19,14 +19,14 @@ architecture tb of tb_adresseur is
 
               index       : in std_logic_vector (3 downto 0);
               addr_ram    : in std_logic_vector (8 downto 0);
-              addr_screen : out std_logic_vector (13 downto 0));
+              addr_screen : out std_logic_vector (16 downto 0));
     end component;
 
     signal clk         : std_logic;
     signal rst         : std_logic;
     signal index       : std_logic_vector (3 downto 0);
     signal addr_ram    : std_logic_vector (8 downto 0);
-    signal addr_screen : std_logic_vector (13 downto 0);
+    signal addr_screen : std_logic_vector (16 downto 0);
     signal             init         :  STD_LOGIC;
 
         

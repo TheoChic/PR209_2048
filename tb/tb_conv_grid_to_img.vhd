@@ -21,7 +21,7 @@ architecture tb of tb_conv_grid_to_img is
               init_cpt_addr_ram : in std_logic;
               init_adresseur    : in std_logic;
               data_out          : out std_logic_vector (7 downto 0);
-              addr_out          : out std_logic_vector (13 downto 0));
+              addr_out          : out std_logic_vector (16 downto 0));
     end component;
 
     signal clk               : std_logic;
@@ -34,7 +34,7 @@ architecture tb of tb_conv_grid_to_img is
     signal init_cpt_addr_ram : std_logic;
     signal init_adresseur    : std_logic;
     signal data_out          : std_logic_vector (7 downto 0);
-    signal addr_out          : std_logic_vector (13 downto 0);
+    signal addr_out          : std_logic_vector (16 downto 0);
 
     constant TbPeriod : time := 10 ns; -- EDIT Put right period here
     signal TbClock : std_logic := '0';
@@ -68,9 +68,9 @@ begin
 
         -- Reset generation
         -- EDIT: Check that rst is really your reset signal
-        rst <= '1';
-        wait for 100 ns;
         rst <= '0';
+        wait for 100 ns;
+        rst <= '1';
         
         -- EDIT Add stimuli here
         index_in <= "0000";
