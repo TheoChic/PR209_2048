@@ -124,7 +124,7 @@ component bascule_d is
            q : out STD_LOGIC_VECTOR (11 downto 0));
 end component;
 
-component RAM_double_acces is
+component RAM_double_acces_grille is
     Port ( clk              : in    STD_LOGIC;
            CE               : in    STD_LOGIC;
            enable_writing   : in    STD_LOGIC;
@@ -146,23 +146,25 @@ component unite_operative is
 end component;
 
 component machine_etats is
-  Port (    CLK, RST, CE            : in std_logic;
-                       
-            ind_i, ind_j            : in std_logic_vector (1 downto 0);       
-            cmp, zero               : in std_logic;
+  Port (   CLK, RST, CE            : in STD_LOGIC;
             
-            addr_max                : in std_logic;
- 
-            addr_max_export         : out STD_LOGIC;
-            cpt_en_export           : out std_logic;
+           cmp, zero               : in std_logic;
             
-            add_en                  : out std_logic;
-            cpt_en, cpt_init        : out std_logic;
-            rst_b                   : out std_logic;            
-            w_en                    : out std_logic;
+           btn                     : in STD_LOGIC;
+           init_btn                : out STD_LOGIC;
+          
+           cpt_ram_grille_en, cpt_ram_grille_init        : out STD_LOGIC;
+           addr_max_ram_grille     : in STD_LOGIC;
             
-            sel_addr, sel_addw      : out std_logic;
-            sel_dataw               : out std_logic_vector(1 downto 0));
+           cpt_ram_ext_en, cpt_ram_ext_init        : out STD_LOGIC;
+           addr_max_ram_ext        : in STD_LOGIC;
+            
+           w_en_ram_grille         : out STD_LOGIC;
+           w_en_ram_ext            : out STD_LOGIC;
+
+           sel_addr, sel_addw      : out STD_LOGIC;
+           sel_dataw               : out STD_LOGIC_VECTOR(1 downto 0);
+           val_btn_init            : out STD_LOGIC);
 end component;
 
 component cpt_export_grille is
@@ -217,7 +219,7 @@ Port map (  e0          => curr_addr,
             sel         => sel_addr,
             y           => addr_r);
 
-grid : RAM_double_acces
+grid : RAM_double_acces_grille
 Port map (  clk         => clk,
             CE          => CE,
             enable_writing => write_en,

@@ -14,8 +14,6 @@ architecture tb of tb_machine_etats is
         port (CLK                 : in std_logic;
               RST                 : in std_logic;
               CE                  : in std_logic;
-              ind_i               : in std_logic_vector (1 downto 0);
-              ind_j               : in std_logic_vector (1 downto 0);
               cmp                 : in std_logic;
               zero                : in std_logic;
               btn                 : in std_logic;

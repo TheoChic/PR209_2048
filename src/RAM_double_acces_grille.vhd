@@ -11,7 +11,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity RAM_double_acces is
+entity RAM_double_acces_grille is
     Port ( clk              : in    STD_LOGIC;
            CE               : in    STD_LOGIC;
            enable_writing   : in    STD_LOGIC;
@@ -23,9 +23,9 @@ entity RAM_double_acces is
            data_in          : in    STD_LOGIC_VECTOR(11 downto 0);
            data_out         : out   STD_LOGIC_VECTOR(11 downto 0);
            data_out_export  : out   STD_LOGIC_VECTOR(11 downto 0));
-end RAM_double_acces;
+end RAM_double_acces_grille;
 
-architecture Behavioral of RAM_double_acces is
+architecture Behavioral of RAM_double_acces_grille is
     TYPE RAM IS ARRAY (0 TO 15) OF STD_LOGIC_VECTOR(11 downto 0);
 
     SIGNAL mem      : RAM := (others => X"000");

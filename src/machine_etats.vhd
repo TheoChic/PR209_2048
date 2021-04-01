@@ -5,8 +5,7 @@ use IEEE.NUMERIC_STD.ALL ;
 -- TODO : CHECK EN FIN De cycle, quand on reste dans recherche 0 même après un addr max, avant le sig on doit faire un décalage, et après on doit aller dans ajour nombre : TB 96us
 entity machine_etats is
   Port (    CLK, RST, CE            : in STD_LOGIC;
-                       
-            ind_i, ind_j            : in STD_LOGIC_VECTOR (1 downto 0);       
+            
             cmp, zero               : in std_logic;
             
             btn                     : in STD_LOGIC;
@@ -22,7 +21,8 @@ entity machine_etats is
             w_en_ram_ext            : out STD_LOGIC;
 
             sel_addr, sel_addw      : out STD_LOGIC;
-            sel_dataw               : out STD_LOGIC_VECTOR(1 downto 0));
+            sel_dataw               : out STD_LOGIC_VECTOR(1 downto 0);
+            val_btn_init            : out STD_LOGIC);
 end machine_etats;
 
 architecture beh_machine_etats of machine_etats is
@@ -88,6 +88,7 @@ begin
                     
                     previous_state <= INIT;
                     bool_ajout_nombre <= TRUE;
+                    val_btn_init <= '0';
                     
                 when INIT_GRILLE => 
                     -- on balance la grille de 0
@@ -110,7 +111,8 @@ begin
                     
                     init_intern_cpt_1 <= '0';
                     init_intern_cpt_2 <= '0';
-                    
+                    val_btn_init <= '1';
+
                 when RESET_ADDR_GRILLE =>
                     sel_dataw           <= "00";
                     sel_addw            <= '0';
@@ -132,7 +134,8 @@ begin
                     previous_state <= RESET_ADDR_GRILLE;
                     
                     cpt_ram_grille_init <= '1';
-                    
+                    val_btn_init <= '0';
+
                 when AJOUT_NOMBRE =>
                     -- on balance la grille de 0
                     
