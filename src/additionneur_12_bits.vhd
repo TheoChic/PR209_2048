@@ -33,7 +33,6 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity additionneur_12_bits is
     Port ( c1, c2   : in STD_LOGIC_VECTOR (11 downto 0);
-           en_add   : in STD_LOGIC;
            add      : out STD_LOGIC_VECTOR (11 downto 0));
 end additionneur_12_bits;
 
@@ -43,10 +42,7 @@ signal sum : unsigned (11 downto 0);
 
 begin
 
-    with en_add select
-        sum <= resize(unsigned(c1), 12) + resize(unsigned(c2), 12) when '1',
-               "000000000000" when others;
-   
+    sum <= resize(unsigned(c1), 12) + resize(unsigned(c2), 12);
     add <= std_logic_vector(sum); 
          
 end beh_additionneur_12_bits;

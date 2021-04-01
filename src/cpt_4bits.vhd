@@ -7,11 +7,10 @@ entity cpt_4bits is
            cpt_en, cpt_init             :   in  std_logic;
            
            val_btn                      :   in  std_logic_vector (3 downto 0);
+           val_btn_init                 :   in  std_logic;
+           rst_b                        :   in  std_logic;
            
-           rst_b                        :   in std_logic;
-           
-           addr_max                     :   out std_logic;
-           ind_i, ind_j                 :   out std_logic_vector (1 downto 0);             
+           addr_max                     :   out std_logic;          
            pr_addr, curr_addr, nx_addr  :   out std_logic_vector (3 downto 0));
 end cpt_4bits;
 
@@ -20,7 +19,7 @@ architecture beh_cpt_4bits of cpt_4bits is
     signal i, j                         : unsigned (1 downto 0); 
     signal u, v                         : unsigned (1 downto 0); 
     signal pr_cpt, curr_cpt, nx_cpt     : unsigned (3 downto 0);
-    signal val_btn_b                    : std_logic_vector(3 downto 0);
+    signal val_btn_b                    : std_logic_vector(3 downto 0):= "1000";
  
     begin
     
@@ -68,7 +67,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     u <= u + 1;
                                 end if;
                                 
-                                if(nx_cpt = 15) then
+                                if(curr_cpt = 15) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -88,7 +87,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     v <= v + 1;
                                 end if;
                                 
-                                if(nx_cpt = 12) then
+                                if(curr_cpt = 12) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -108,7 +107,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     u <= u + 1;
                                 end if;
                                 
-                                if(nx_cpt = 3) then
+                                if(curr_cpt = 3) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -126,7 +125,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     v <= v + 1;
                                 end if;
                                 
-                                if(nx_cpt = 15) then
+                                if(curr_cpt = 15) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -143,18 +142,37 @@ architecture beh_cpt_4bits of cpt_4bits is
                                   
     end process cptsync;
 
-    with rst_b select 
-        val_btn_b <=    val_btn when '0',
-                        "0000" when others;
-   
+    process(rst_b, val_btn, val_btn_init)
+    begin
+    
+        if(val_btn_init = '1') then
+             val_btn_b <= "1000";
+        
+        else
+            
+            if(rst_b = '1') then  
+                val_btn_b <= "0000";
+            else
+                if(val_btn(0) = '1') then
+                    val_btn_b(0) <= val_btn(0);
+                elsif(val_btn(1) = '1') then
+                    val_btn_b(1) <= val_btn(1);
+                elsif(val_btn(2) = '1') then
+                    val_btn_b(2) <= val_btn(2);
+                elsif(val_btn(3) = '1') then
+                    val_btn_b(3) <= val_btn(3);
+                    end if;
+        
+        end if;    
+    end if;
+    
+    end process;
+
     nx_cpt    <= resize(resize(v,4)*4, 4)+resize(u, 4);
     curr_cpt  <= resize(resize(j,4)*4, 4)+resize(i, 4);
     
     pr_addr     <= std_logic_vector(pr_cpt);
     curr_addr   <= std_logic_vector(curr_cpt);
     nx_addr     <= std_logic_vector(nx_cpt);
-    
-    ind_i       <= std_logic_vector(i(1 DOWNTO 0));
-    ind_j       <= std_logic_vector(j(1 DOWNTO 0));
     
 end beh_cpt_4bits;

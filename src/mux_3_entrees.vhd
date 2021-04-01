@@ -32,9 +32,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity mux_3_entrees is
-    Port ( e0, e1, e2   : in STD_LOGIC_VECTOR (11 downto 0);
-           sel          : in STD_LOGIC_VECTOR (1 downto 0);
-           y            : out STD_LOGIC_VECTOR (11 downto 0));
+    Port ( e0, e1, e2, e3   : in STD_LOGIC_VECTOR (11 downto 0);
+           sel              : in STD_LOGIC_VECTOR (1 downto 0);
+           y                : out STD_LOGIC_VECTOR (11 downto 0));
 end mux_3_entrees;
 
 architecture beh_mux_3_entrees of mux_3_entrees is
@@ -43,6 +43,7 @@ begin
     with sel select
         y <=    e0 when "00",
                 e1 when "01",
-                e2 when others;
+                e2 when "10",
+                e3 when others;
 
 end beh_mux_3_entrees;

@@ -33,7 +33,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity unite_operative is
     Port(   c1, c2      : in STD_LOGIC_VECTOR (11 downto 0);
-            en_add      : in STD_LOGIC;
             cmp, zero   : out STD_LOGIC;
             add         : out STD_LOGIC_VECTOR (11 downto 0));
 end unite_operative;
@@ -47,7 +46,6 @@ end component;
 
 component additionneur_12_bits is
     Port ( c1, c2   : in STD_LOGIC_VECTOR (11 downto 0);
-           en_add   : in STD_LOGIC;
            add      : out STD_LOGIC_VECTOR (11 downto 0));
 end component;
 
@@ -62,7 +60,6 @@ port map(   c1      =>  c1,
 add1 : additionneur_12_bits
 port map(   c1      => c1, 
             c2      => c2,
-            en_add  => en_add,
             add     => add); 
 
 end beh_unite_operative;

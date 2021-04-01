@@ -34,6 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity cpt_export_grille is
     Port ( clk, rst, CE :   in  STD_LOGIC;
            cpt_en       :   in  STD_LOGIC;
+           init         :   in  STD_LOGIC;
            addr_max     :   out STD_LOGIC;
            addr         :   out STD_LOGIC_VECTOR (3 downto 0));
 end cpt_export_grille;
@@ -52,10 +53,11 @@ begin
                 addr_int    <= "0000";
                         
             elsif ( clk = '1' and clk ' event ) then
-            
+                
                 if (CE = '1') then
-                               
-                    if (cpt_en = '1') then
+                    if init = '1' then
+                        addr_int    <= "0000";
+                    elsif (cpt_en = '1') then
                         addr_int <= addr_int + 1;
                     end if;
                     
