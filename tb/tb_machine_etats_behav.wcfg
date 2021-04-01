@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="112656000fs"></ZoomStartTime>
-      <ZoomEndTime time="135656001fs"></ZoomEndTime>
-      <Cursor1Time time="67500000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="50000001fs"></ZoomEndTime>
+      <Cursor1Time time="50000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="180"></NameColumnWidth>
-      <ValueColumnWidth column_width="79"></ValueColumnWidth>
+      <ValueColumnWidth column_width="75"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="10" />
    <wvobject fp_name="/tb_machine_etats/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
@@ -26,10 +26,6 @@
    <wvobject fp_name="/tb_machine_etats/dut/nx_state" type="other">
       <obj_property name="ElementShortName">nx_state</obj_property>
       <obj_property name="ObjectShortName">nx_state</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_machine_etats/dut/previous_state" type="other">
-      <obj_property name="ElementShortName">previous_state</obj_property>
-      <obj_property name="ObjectShortName">previous_state</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_machine_etats/dut/pr_state" type="other">
       <obj_property name="ElementShortName">pr_state</obj_property>
@@ -62,10 +58,6 @@
       <wvobject fp_name="/tb_machine_etats/cmp" type="logic">
          <obj_property name="ElementShortName">cmp</obj_property>
          <obj_property name="ObjectShortName">cmp</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb_machine_etats/btn" type="logic">
-         <obj_property name="ElementShortName">btn</obj_property>
-         <obj_property name="ObjectShortName">btn</obj_property>
       </wvobject>
       <wvobject fp_name="/tb_machine_etats/zero" type="logic">
          <obj_property name="ElementShortName">zero</obj_property>

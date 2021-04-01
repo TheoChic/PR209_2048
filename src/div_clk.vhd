@@ -38,7 +38,7 @@ end clk_div;
 
 architecture beh_clk_div of clk_div is
 
-signal cpt         : unsigned (9 downto 0):= "000000000000";
+signal cpt         : unsigned (9 downto 0):= "0000000000";
 
 begin
 
@@ -46,11 +46,11 @@ begin
         begin
         
             if ( rst = '0') then
-                cpt    <= "000000000000";
+                cpt    <= "0000000000";
                         
             elsif ( clk = '1' and clk ' event ) then
                  if (cpt = "1111101000") then
-                    cpt <= "000000000000";
+                    cpt <= "0000000000";
                     CE_graph <= '1';
                  else
                     cpt <= cpt + 1;

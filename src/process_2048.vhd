@@ -65,7 +65,7 @@ signal addr_max_ram_grille          : std_logic;
 signal addr_write_ram_ext           : std_logic_vector(3 downto 0);
 
 ---- SIGNAUX RAM grille extérieure
-signal addr_max_ram_ext             : std_logic;
+signal sig_addr_max_ram_ext             : std_logic;
 
 -- SIGNAUX FSM
 signal cpt_ram_ext_init             : std_logic;
@@ -130,11 +130,12 @@ end component;
 
 component bascule_d is
     Port ( clk  : in STD_LOGIC;
+           rst  : in STD_LOGIC;
            d    : in STD_LOGIC_VECTOR (11 downto 0);
            q    : out STD_LOGIC_VECTOR (11 downto 0));
 end component;
 
-component RAM_double_acces is
+component RAM_double_acces_grille is
     Port ( clk              : in    STD_LOGIC;
            CE               : in    STD_LOGIC;
            enable_writing   : in    STD_LOGIC;
@@ -236,7 +237,7 @@ Port map (  e0          => curr_addr,
             sel         => sel_addr,
             y           => addr_r);
 
-grid : RAM_double_acces
+grid : RAM_double_acces_grille
 Port map (  clk         => clk,
             CE          => CE,
             
@@ -250,6 +251,7 @@ Port map (  clk         => clk,
             
 reg : bascule_d
 Port map(   clk         => clk,
+            rst         => rst,
             d           => data_out,
             q           => data_out_pr
             );
@@ -288,7 +290,7 @@ Port map(   clk         => clk,
             addr_max_ram_grille => addr_max_ram_grille,
             cpt_ram_ext_en      => cpt_ram_ext_en,
             cpt_ram_ext_init    => cpt_ram_ext_init,
-            addr_max_ram_ext    => addr_max_ram_ext,
+            addr_max_ram_ext    => sig_addr_max_ram_ext,
             w_en_ram_grille     => w_en_ram_grille,
             w_en_ram_ext        => w_enable_export,
             sel_addr            => sel_addr,
@@ -302,7 +304,7 @@ Port map(   clk         => clk,
             CE          => CE,
             init        => cpt_ram_ext_init,
             cpt_en      => cpt_ram_ext_en,
-            addr_max    => addr_max_ram_ext,
+            addr_max    => sig_addr_max_ram_ext,
             addr        => addr_write_ram_ext);               
 
 addr_write_export <= addr_write_ram_ext;

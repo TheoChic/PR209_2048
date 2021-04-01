@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_Top_2048_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_Top_2048" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="32075500fs"></ZoomStartTime>
+      <ZoomEndTime time="39845501fs"></ZoomEndTime>
+      <Cursor1Time time="34500000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="180"></NameColumnWidth>
+      <ValueColumnWidth column_width="71"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="23" />
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/CLK" type="logic">
+      <obj_property name="ElementShortName">CLK</obj_property>
+      <obj_property name="ObjectShortName">CLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/pr_state" type="other">
+      <obj_property name="ElementShortName">pr_state</obj_property>
+      <obj_property name="ObjectShortName">pr_state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/data_out_export" type="array">
+      <obj_property name="ElementShortName">data_out_export[11:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out_export[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/data_out" type="array">
+      <obj_property name="ElementShortName">data_out[11:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/pr_addr" type="array">
+      <obj_property name="ElementShortName">pr_addr[3:0]</obj_property>
+      <obj_property name="ObjectShortName">pr_addr[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/curr_addr" type="array">
+      <obj_property name="ElementShortName">curr_addr[3:0]</obj_property>
+      <obj_property name="ObjectShortName">curr_addr[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/nx_addr" type="array">
+      <obj_property name="ElementShortName">nx_addr[3:0]</obj_property>
+      <obj_property name="ObjectShortName">nx_addr[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/addr_write_ram_ext" type="array">
+      <obj_property name="ElementShortName">addr_write_ram_ext[3:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_write_ram_ext[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/w_enable_export" type="logic">
+      <obj_property name="ElementShortName">w_enable_export</obj_property>
+      <obj_property name="ObjectShortName">w_enable_export</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/cpt_ram_grille_en" type="logic">
+      <obj_property name="ElementShortName">cpt_ram_grille_en</obj_property>
+      <obj_property name="ObjectShortName">cpt_ram_grille_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/cpt_ram_grille_init" type="logic">
+      <obj_property name="ElementShortName">cpt_ram_grille_init</obj_property>
+      <obj_property name="ObjectShortName">cpt_ram_grille_init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/addr_max_ram_grille" type="logic">
+      <obj_property name="ElementShortName">addr_max_ram_grille</obj_property>
+      <obj_property name="ObjectShortName">addr_max_ram_grille</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/cpt_ram_ext_en" type="logic">
+      <obj_property name="ElementShortName">cpt_ram_ext_en</obj_property>
+      <obj_property name="ObjectShortName">cpt_ram_ext_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/cpt_ram_ext_init" type="logic">
+      <obj_property name="ElementShortName">cpt_ram_ext_init</obj_property>
+      <obj_property name="ObjectShortName">cpt_ram_ext_init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/addr_max_ram_ext" type="logic">
+      <obj_property name="ElementShortName">addr_max_ram_ext</obj_property>
+      <obj_property name="ObjectShortName">addr_max_ram_ext</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/w_en_ram_grille" type="logic">
+      <obj_property name="ElementShortName">w_en_ram_grille</obj_property>
+      <obj_property name="ObjectShortName">w_en_ram_grille</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/w_en_ram_ext" type="logic">
+      <obj_property name="ElementShortName">w_en_ram_ext</obj_property>
+      <obj_property name="ObjectShortName">w_en_ram_ext</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/sel_addr" type="logic">
+      <obj_property name="ElementShortName">sel_addr</obj_property>
+      <obj_property name="ObjectShortName">sel_addr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/sel_addw" type="logic">
+      <obj_property name="ElementShortName">sel_addw</obj_property>
+      <obj_property name="ObjectShortName">sel_addw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/sel_dataw" type="array">
+      <obj_property name="ElementShortName">sel_dataw[1:0]</obj_property>
+      <obj_property name="ObjectShortName">sel_dataw[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/val_btn_init" type="logic">
+      <obj_property name="ElementShortName">val_btn_init</obj_property>
+      <obj_property name="ObjectShortName">val_btn_init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/cmp" type="logic">
+      <obj_property name="ElementShortName">cmp</obj_property>
+      <obj_property name="ObjectShortName">cmp</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_Top_2048/dut/Calcul/fsm/zero" type="logic">
+      <obj_property name="ElementShortName">zero</obj_property>
+      <obj_property name="ObjectShortName">zero</obj_property>
+   </wvobject>
+</wave_config>

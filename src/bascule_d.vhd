@@ -32,7 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity bascule_d is
-    Port ( clk : in STD_LOGIC;
+    Port ( clk,rst : in STD_LOGIC;
            d : in STD_LOGIC_VECTOR (11 downto 0);
            q : out STD_LOGIC_VECTOR (11 downto 0));
 end bascule_d;
@@ -41,9 +41,11 @@ architecture beh_bascule_d of bascule_d is
 
 begin
 
-    process (clk)
+    process (clk, rst)
         begin
-            if rising_edge (clk) then
+            if rst = '0' then
+                q <= (others => '0');
+            elsif(clk'event and clk = '1') then
                 q <= d;
             end if;
     end process;

@@ -22,7 +22,7 @@ signal flag : std_logic_vector(3 downto 0);
 begin
 p1 : process ( CLK , RST )
     begin
-        if ( RST = '1' or btn_haut = '0') then
+        if ( RST = '0' or btn_haut = '0') then
             flag(0) <= '0';
             haut <= '0';
         elsif ( CLK'event and CLK  = '1' and CE = '1') then
@@ -37,7 +37,7 @@ end process p1;
 
 p2 : process ( CLK , RST )
     begin
-        if ( RST = '1' or btn_bas = '0') then
+        if ( RST = '0' or btn_bas = '0') then
             flag(1) <= '0';
             bas <= '0';
         elsif ( CLK'event and CLK = '1' and CE = '1') then
@@ -52,7 +52,7 @@ end process p2;
 
 p3 : process ( CLK , RST )
     begin
-        if ( RST = '1' or btn_droit = '0') then
+        if ( RST = '0' or btn_droit = '0') then
             flag(2) <= '0';
             droit <= '0';
         elsif ( CLK'event and CLK = '1' and CE = '1') then
@@ -67,7 +67,7 @@ end process p3;
 
 p4 : process ( CLK , RST )
     begin
-        if ( RST = '1' or btn_gauche = '0') then
+        if ( RST = '0' or btn_gauche = '0') then
             flag(3) <= '0';
             gauche <= '0';
         elsif ( CLK'event and CLK = '1' and CE = '1') then

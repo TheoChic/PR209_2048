@@ -28,7 +28,7 @@ architecture beh_cpt_4bits of cpt_4bits is
         
         begin
         
-            if ( rst = '1') then
+            if ( rst = '0') then
                 i           <= "00";
                 j           <= "00";
                 
@@ -67,7 +67,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     u <= u + 1;
                                 end if;
                                 
-                                if(curr_cpt = 15) then
+                                if(nx_cpt = 15) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -87,7 +87,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     v <= v + 1;
                                 end if;
                                 
-                                if(curr_cpt = 12) then
+                                if(nx_cpt = 12) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -107,7 +107,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     u <= u + 1;
                                 end if;
                                 
-                                if(curr_cpt = 3) then
+                                if(nx_cpt = 3) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';
@@ -125,7 +125,7 @@ architecture beh_cpt_4bits of cpt_4bits is
                                     v <= v + 1;
                                 end if;
                                 
-                                if(curr_cpt = 15) then
+                                if(nx_cpt = 15) then
                                     addr_max <= '1';
                                 else
                                     addr_max <= '0';

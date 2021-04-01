@@ -1,6 +1,6 @@
 -- Testbench automatically generated online
 -- at https://vhdl.lapinoo.net
--- Generation date : 31.3.2021 12:44:57 UTC
+-- Generation date : 1.4.2021 18:07:20 UTC
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -16,7 +16,10 @@ architecture tb of tb_machine_etats is
               CE                  : in std_logic;
               cmp                 : in std_logic;
               zero                : in std_logic;
-              btn                 : in std_logic;
+              btn_haut            : in std_logic;
+              btn_bas             : in std_logic;
+              btn_gauche          : in std_logic;
+              btn_droit           : in std_logic;
               init_btn            : out std_logic;
               cpt_ram_grille_en   : out std_logic;
               cpt_ram_grille_init : out std_logic;
@@ -28,17 +31,19 @@ architecture tb of tb_machine_etats is
               w_en_ram_ext        : out std_logic;
               sel_addr            : out std_logic;
               sel_addw            : out std_logic;
-              sel_dataw           : out std_logic_vector (1 downto 0));
+              sel_dataw           : out std_logic_vector (1 downto 0);
+              val_btn_init        : out std_logic);
     end component;
 
     signal CLK                 : std_logic;
     signal RST                 : std_logic;
     signal CE                  : std_logic;
-    signal ind_i               : std_logic_vector (1 downto 0);
-    signal ind_j               : std_logic_vector (1 downto 0);
     signal cmp                 : std_logic;
     signal zero                : std_logic;
-    signal btn                 : std_logic;
+    signal btn_haut            : std_logic;
+    signal btn_bas             : std_logic;
+    signal btn_gauche          : std_logic;
+    signal btn_droit           : std_logic;
     signal init_btn            : std_logic;
     signal cpt_ram_grille_en   : std_logic;
     signal cpt_ram_grille_init : std_logic;
@@ -51,6 +56,7 @@ architecture tb of tb_machine_etats is
     signal sel_addr            : std_logic;
     signal sel_addw            : std_logic;
     signal sel_dataw           : std_logic_vector (1 downto 0);
+    signal val_btn_init        : std_logic;
 
     constant TbPeriod : time := 1000 ns; -- EDIT Put right period here
     signal TbClock : std_logic := '0';
@@ -62,11 +68,12 @@ begin
     port map (CLK                 => CLK,
               RST                 => RST,
               CE                  => CE,
-              ind_i               => ind_i,
-              ind_j               => ind_j,
               cmp                 => cmp,
               zero                => zero,
-              btn                 => btn,
+              btn_haut            => btn_haut,
+              btn_bas             => btn_bas,
+              btn_gauche          => btn_gauche,
+              btn_droit           => btn_droit,
               init_btn            => init_btn,
               cpt_ram_grille_en   => cpt_ram_grille_en,
               cpt_ram_grille_init => cpt_ram_grille_init,
@@ -78,7 +85,8 @@ begin
               w_en_ram_ext        => w_en_ram_ext,
               sel_addr            => sel_addr,
               sel_addw            => sel_addw,
-              sel_dataw           => sel_dataw);
+              sel_dataw           => sel_dataw,
+              val_btn_init        => val_btn_init);
 
     -- Clock generation
     TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
@@ -90,16 +98,18 @@ begin
     begin
         -- EDIT Adapt initialization as needed
         CE <= '1';
-        ind_i <= (others => '0');
-        ind_j <= (others => '0');
         cmp <= '0';
         zero <= '0';
-        btn <= '0';
+        btn_haut <= '0';
+        btn_bas <= '0';
+        btn_gauche <= '0';
+        btn_droit <= '0';
         addr_max_ram_grille <= '0';
         addr_max_ram_ext <= '0';
 
         -- Reset generation
         -- EDIT: Check that RST is really your reset signal
+        
         RST <= '0';
         wait for 100 ns;
         RST <= '1';
@@ -123,18 +133,18 @@ begin
         
         --EXPORT GRILLE
         wait for 15 * TbPeriod;
-        addr_max_ram_grille <= '1';        
+        addr_max_ram_ext <= '1';        
 
         
         -- EDIT Add stimuli here --WAITING
         wait for 1 * TbPeriod;
-        addr_max_ram_grille <= '0'; 
+        addr_max_ram_ext <= '0'; 
         wait for 4 * TbPeriod;
-        btn <= '1';       
+        btn_haut <= '1';       
 
         -- EDIT Add stimuli here RECHERCHE 0
         wait for 1 * TbPeriod;
-        btn <= '0';
+        btn_haut <= '0';
         wait for 4 * TbPeriod;
         zero <= '1';
         
@@ -205,11 +215,11 @@ begin
         wait for 1 * TbPeriod;
         addr_max_ram_grille <= '0'; 
         wait for 4 * TbPeriod;
-        btn <= '1';       
+        btn_haut <= '1';       
 
         -- EDIT Add stimuli here RECHERCHE 0
         wait for 1 * TbPeriod;
-        btn <= '0';
+        btn_haut <= '0';
         wait for 4 * TbPeriod;
         zero <= '1';
         
@@ -249,7 +259,9 @@ begin
         wait for 14 * TbPeriod;
         addr_max_ram_grille <= '1'; 
          
-         
+        -- EDIT Add stimuli here
+        wait for 100 * TbPeriod;
+
         -- Stop the clock and hence terminate the simulation
         TbSimEnded <= '1';
         wait;

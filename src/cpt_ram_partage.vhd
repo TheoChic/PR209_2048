@@ -47,7 +47,7 @@ begin
         
         begin
         
-            if ( rst = '1') then
+            if ( rst = '0') then
                 addr_int    <= "0000";
                         
             elsif ( clk = '1' and clk ' event ) then

@@ -144,7 +144,7 @@ begin
                     -- on balance la grille de 0
                     
                     sel_dataw           <= "11";
-                    sel_addw            <= '0';
+                    sel_addw            <= '1';
                     w_en_ram_grille     <= '1';
                     
                     cpt_ram_grille_en   <= '0';
@@ -314,7 +314,7 @@ begin
             
     end process cal_sig;
 
-    cal_nx_state : process (rst, pr_state, addr_max_ram_grille, btn_haut, btn_bas, btn_droit, btn_gauche , bool_calc, zero, previous_state, cpt, cmp) --process transition
+    cal_nx_state : process (rst, pr_state, addr_max_ram_grille,addr_max_ram_ext,  btn_haut, btn_bas, btn_droit, btn_gauche , bool_calc, zero, previous_state, cpt, cmp) --process transition
         begin
         
             case pr_state is
@@ -336,9 +336,10 @@ begin
 
                     --pas de random, cpt qui balmlait les case et met un 0 qq part    
                 when EXPORT_GRILLE => 
-                    if addr_max_ram_grille = '1' then
+                    if addr_max_ram_ext = '1' then
                         nx_state <= WAITING;
                     end if;
+                      --nx_state <= WAITING;
                     
                     --activer un compteur qui ballaye toutes les cases, on reste dans l'état tant que pas addr max
                     --activer l'écriture sur la ram CPU qui fonctionnera en front descendant
@@ -385,7 +386,7 @@ begin
                     elsif cpt >= 4 then
                         nx_state <= SAVING;
                         
-                    elsif cmp = '1' then
+                    elsif (cmp = '1' and zero = '0') then
                         nx_state <= ADD;
                     
                     else

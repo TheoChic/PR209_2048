@@ -154,7 +154,7 @@ RAM_partage : RAm_double_acces_partage
 cpt_addr : cpt_ram_partage 
     Port map (  clk         => clk,
                 rst         => rst,
-                CE          => sig_CE,
+                CE          => CE_graph,
                 
                 cpt_en      => '1',
                 data_out    => addr_read);
@@ -164,6 +164,7 @@ Clock_divider : clk_div
                rst         => rst,
                
                CE_graph    => CE_graph);
-                
+   
+sig_CE <= '1';             
                 
 end Behavioral;
